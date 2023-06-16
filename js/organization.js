@@ -44,18 +44,12 @@ jQuery(document).ready(function ($) {
         },
         success: function (response) {
           if (response.success) {
-            console.log(response.success);
-            // Perform any success actions, such as updating the table or displaying a success message
-            console.log(response.db);
-            return false;
             location.reload();
           } else {
-            // Handle the error case, such as displaying an error message
             alert("Error: " + response.data.message);
           }
         },
         error: function (xhr, status, error) {
-          // Handle AJAX errors
           alert("AJAX Error: " + error);
         },
       });
@@ -66,9 +60,7 @@ jQuery(document).ready(function ($) {
   $(document).on("click", ".delete-organization", function () {
     var organizationId = $(this).data("id");
 
-  
     if (confirm("Are you sure you want to delete this organization?")) {
-    
       $.ajax({
         url: ajaxurl,
         type: "POST",
