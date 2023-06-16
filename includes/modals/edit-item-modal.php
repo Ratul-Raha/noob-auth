@@ -8,7 +8,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editItemForm">
+                <form id="editItemForm" method="post">
+                    <input type="hidden" id="editItemId" name="editItemId" value="">
+                    <input type="hidden" id="editOrganizationId" name="editOrganizationId" value="">
+                    <input type="hidden" id="editFolderId" name="editFolderId" value="">
                     <div class="form-group">
                         <label for="editFolder">Folder</label>
                         <select class="form-control" id="editFolder">
@@ -18,7 +21,7 @@
                             $folder_table_name = $wpdb->prefix . 'folders';
                             $folders = $wpdb->get_results("SELECT * FROM $folder_table_name");
                             foreach ($folders as $folder) {
-                                echo '<option value="' . $folder->id . '">' . $folder->folder_name . '</option>';
+                                echo '<option value="' . $folder->id . '" data-folder-id="' . $folder->id . '">' . $folder->folder_name . '</option>';
                             }
                             ?>
                         </select>
@@ -28,10 +31,11 @@
                         <select class="form-control" id="editOrganization">
                             <option id="default-organization" value=""></option>
                             <?php
+                            global $wpdb;
                             $organization_table_name = $wpdb->prefix . 'organizations';
                             $organizations = $wpdb->get_results("SELECT * FROM $organization_table_name");
                             foreach ($organizations as $organization) {
-                                echo '<option value="' . $organization->id . '">' . $organization->organization_name . '</option>';
+                                echo '<option value="' . $organization->id . '" data-organization-id="' . $organization->id . '">' . $organization->organization_name . '</option>';
                             }
                             ?>
                         </select>

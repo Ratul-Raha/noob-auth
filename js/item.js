@@ -95,31 +95,81 @@ $(document).ready(function () {
     return urlRegex.test(url);
   }
 
-
   //Fill Edit Modal with Data
-  $('.edit-item').on('click', function() {
+  $(".edit-item").on("click", function () {
     // Get the row data
-    var $row = $(this).closest('tr');
-    var itemId = $row.find('.item-id').text();
-    console.log(itemId);
-    var folder = $row.find('.item-folder').text();
-    var organization = $row.find('.item-organization').text();
-    var name = $row.find('.item-name').text();
-    var email = $row.find('.item-email').text();
-    var password = $row.find('.item-password').text();
-    var url = $row.find('.item-url a').attr('href');
-  
+    var $row = $(this).closest("tr");
+    var itemId = $row.find(".item-id").text();
+    var folder = $row.find(".item-folder").text();
+    var folderId = $row.find(".item-folder").data("folder-id");
+    var organization = $row.find(".item-organization").text();
+    var organizationId = $row
+      .find(".item-organization")
+      .data("organization-id");
+    var name = $row.find(".item-name").text();
+    var email = $row.find(".item-email").text();
+    var password = $row.find(".item-password").text();
+    var url = $row.find(".item-url a").attr("href");
+
     // Populate the form fields in the modal with the retrieved data
-    $('#editItemModal #editItemId').val(itemId);
-    $('#editItemModal #default-folder').val(folder).text(folder);
-    $('#editItemModal #default-organization').val(organization).text(organization);
-    $('#editItemModal #editName').val(name);
-    $('#editItemModal #editEmail').val(email);
-    $('#editItemModal #editPassword').val(password);
-    $('#editItemModal #editURL').val(url);
-  
+    $("#editFolderId").val(folderId);
+    $("#editOrganizationId").val(organizationId);
+    $("#editItemModal #editItemId").val(itemId);
+    $("#editItemModal #default-folder").val(folder).text(folder);
+    $("#editItemModal #default-organization")
+      .val(organization)
+      .text(organization);
+    $("#editItemModal #editName").val(name);
+    $("#editItemModal #editEmail").val(email);
+    $("#editItemModal #editPassword").val(password);
+    $("#editItemModal #editURL").val(url);
+
     // Open the modal
-    $('#editItemModal').modal('show');
+    $("#editItemModal").modal("show");
   });
 
+  // Edit Item
+  $("#editItemForm").submit(function (event) {
+    event.preventDefault();
+    var itemID = $("#editItemId").val();
+    var folder =
+      $("#editFolder option:selected").data("folder-id") ||
+      $("#editFolderId").val();
+    var organization =
+      $("#editOrganization option:selected").data("organization-id") ||
+      $("#editOrganizationId").val();
+    console.log(folder, organization);
+    var name = $("#editName").val();
+    var email = $("#editEmail").val();
+    var password = $("#editPassword").val();
+    var url = $("#editURL").val();
+    
+    $.ajax({
+      type: "POST",
+      url: ajaxurl,
+      data: {
+        action: "update_item",
+        folder: folder,
+        organization: organization,
+        name: name,
+        email: email,
+        password: password,
+        url: url,
+        itemID: itemID,
+      },
+      dataType: "json",
+      success: function (response) {
+        if (response.success) {
+          alert("Item updated successfully");
+        } else {
+          alert("Failed to update item. Please try again.");
+        }
+      },
+      error: function (err) {
+        console.log("vvvvv",err);
+        alert("An error occurred while updating the item.");
+      },
+    });
+
+  });
 });
