@@ -54,6 +54,9 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <button type="button" class="btn btn-secondary" id="generatePasswordBtn">Generate Password</button>
+                    </div>
+                    <div class="form-group">
                         <label for="url">URL</label>
                         <input type="url" class="form-control" id="url" placeholder="Enter URL" required>
                     </div>

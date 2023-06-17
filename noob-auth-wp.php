@@ -59,6 +59,7 @@ add_action('wp_ajax_delete_organization', array($organization_manager, 'delete_o
 add_action('wp_ajax_add_item', array($item_manager, 'add_item'));
 add_action('wp_ajax_update_item', array($item_manager, 'update_item'));
 add_action('wp_ajax_delete_item', array($item_manager, 'delete_item'));
+add_action('wp_ajax_export_items_csv', array($item_manager, 'export_items_csv'));
 
 function enqueue_custom_styles()
 {

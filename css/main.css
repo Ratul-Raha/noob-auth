@@ -14,4 +14,84 @@
     transform: translateY(-50%);
     cursor: pointer;
 }
+/* Pagination */
+.pagination-box {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .pagination {
+    display: inline-block;
+    background-color: #f8f9fa;
+    padding: 5px;
+  }
+  
+  .pagination a {
+    display: inline-block; /* Updated */
+    color: #333;
+    padding: 6px 12px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+  }
+  
+  .pagination a:hover {
+    background-color: #ddd;
+  }
+  
+  .pagination .current {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    padding: 6px 12px;
+  }
+  
+  .pagination .dots {
+    padding: 2px 5px;
+  }
+  
+  .pagination .prev-next {
+    margin: 0 5px;
+  }
+
+  /* Folder CSS */
+
+  .folder-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.folder-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.folder-item .fas.fa-folder {
+  color: #007bff;
+}
+
+.folder-item .folder-name {
+  font-weight: bold;
+}
+
+.folder-item .folder-actions {
+  margin-left: auto;
+}
+
+/*Group table data */
+
+#drag-container {
+  height: 50px;
+  border: 2px dashed #ccc;
+  margin-bottom: 10px;
+}
+
+.dragged-over {
+  border-color: #333;
+}
+
+
+  
+  
 

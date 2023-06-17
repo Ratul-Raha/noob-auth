@@ -1,4 +1,27 @@
 $(document).ready(function () {
+  //Generate Password
+  function generatePassword(length) {
+    var chars =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+=";
+    var password = "";
+    for (var i = 0; i < length; i++) {
+      var randomIndex = Math.floor(Math.random() * chars.length);
+      password += chars[randomIndex];
+    }
+    return password;
+  }
+
+  // Handle Generate Password button click event
+  $(document).on("click", "#generatePasswordBtn", function () {
+    var generatedPassword = generatePassword(12); 
+    $("#password").val(generatedPassword);
+  });
+
+  $(document).on("click", "#generatePasswordBtn2", function () {
+    var generatedPassword = generatePassword(12);
+    $("#editPassword").val(generatedPassword);
+  });
+
   // Form submission
   $("#addItemForm").submit(function (event) {
     event.preventDefault();
@@ -20,6 +43,8 @@ $(document).ready(function () {
         success: function (response) {
           if (response.success) {
             alert("Item added successfully");
+            $("#addItemModal").hide();
+            location.reload();
           } else {
             alert("Failed to add item. Please try again.");
           }
@@ -34,9 +59,10 @@ $(document).ready(function () {
   });
 
   // Password visibility toggle
-  $(document).on("click", ".password-toggle-icon", function () {
+  $(".password-toggle-icon").click(function () {
     var passwordInput = $(this).siblings('input[type="password"]');
     var passwordField = $(this).find("i");
+
     if (passwordInput.attr("type") === "password") {
       passwordInput.attr("type", "text");
       passwordField.removeClass("fa-eye");
@@ -143,7 +169,7 @@ $(document).ready(function () {
     var email = $("#editEmail").val();
     var password = $("#editPassword").val();
     var url = $("#editURL").val();
-    
+
     $.ajax({
       type: "POST",
       url: ajaxurl,
@@ -161,15 +187,78 @@ $(document).ready(function () {
       success: function (response) {
         if (response.success) {
           alert("Item updated successfully");
+          $("#editItemModal").hide();
+          location.reload();
+          
         } else {
           alert("Failed to update item. Please try again.");
         }
       },
       error: function (err) {
-        console.log("vvvvv",err);
+        console.log("vvvv", err);
         alert("An error occurred while updating the item.");
       },
     });
-
   });
+
+  //Delete Item
+  $(document).on("click", ".delete-item", function () {
+    var itemId = $(this).data("item-id");
+    alert("SDDF")
+    if (confirm("Are you sure you want to delete this item?")) {
+      $.ajax({
+        type: "POST",
+        url: ajaxurl,
+        data: {
+          action: "delete_item",
+          itemId: itemId,
+        },
+        dataType: "json",
+        success: function (response) {
+          if (response.success) {
+            alert("Item deleted successfully");
+          } else {
+            alert("Failed to delete item. Please try again.");
+          }
+        },
+        error: function () {
+          alert("An error occurred while deleting the item.");
+        },
+      });
+    }
+  });
+
+  //Export Csv
+
+    $('#export-csv-btn').on('click', function(e) {
+      e.preventDefault();
+      exportItemsCSV();
+    });
+  
+    function exportItemsCSV() {
+      $.post(
+        ajaxurl,
+        {
+          action: 'export_items_csv',
+        },
+        function(response) {
+          // Create a temporary link to trigger the download
+          var link = document.createElement('a');
+          link.href = response.data.file;
+          link.download = response.data.filename;
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        },
+        'json'
+      );
+    }
+
+      // Make table headers draggable
+ 
+    
+
+
+
 });
