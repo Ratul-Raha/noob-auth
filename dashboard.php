@@ -1,7 +1,7 @@
 <div class="page-header">
   <h2 class="float-left">All Items</h2>
   <div class="export-btn float-right">
-    <a href="#" class="btn btn-primary" id="export-csv-btn">Export CSV</a>
+    <!-- <a href="#" class="btn btn-primary" id="export-csv-btn">Export CSV</a> -->
   </div>
   <div class="clearfix"></div>
 </div>
