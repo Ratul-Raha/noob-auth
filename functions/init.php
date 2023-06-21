@@ -4,15 +4,11 @@ function noob_init()
     require_once plugin_dir_path(__FILE__) . 'folder_functions.php';
 require_once plugin_dir_path(__FILE__) . 'organization_functions.php';
 require_once plugin_dir_path(__FILE__) . 'item_functions.php';
-require_once plugin_dir_path(__FILE__) . 'create_custom_table.php';
 
 
 $folder_manager = new FolderManager();
 $organization_manager = new OrganizationManager();
 $item_manager = new ItemManager();
-
-
-
 
 add_action('wp_ajax_add_folder', array($folder_manager, 'add_folder'));
 add_action('wp_ajax_update_folder', array($folder_manager, 'update_folder'));

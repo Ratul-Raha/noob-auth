@@ -17,6 +17,7 @@
  */
 
 require_once plugin_dir_path(__FILE__) . 'functions/init.php';
+require_once plugin_dir_path(__FILE__) . 'functions/create_custom_table.php';
 
 add_action('init', 'noob_init');
 
