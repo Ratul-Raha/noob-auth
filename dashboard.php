@@ -28,10 +28,15 @@
     $current_page = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
     $items_per_page = 5;
 
-    $items_query = "SELECT items.id, items.name, items.email, items.password, items.url, organizations.organization_name, folders.folder_name, items.folder_id, items.organization_id 
-                    FROM $items_table_name AS items 
-                    LEFT JOIN $organizations_table_name AS organizations ON items.organization_id = organizations.id 
-                    LEFT JOIN $folders_table_name AS folders ON items.folder_id = folders.id";
+    $items_query = "SELECT items.id, items.name, items.email, items.password, items.url, items.folder_id, items.organization_id 
+                FROM $items_table_name AS items";
+
+    if ($wpdb->get_var("SELECT COUNT(*) FROM $items_table_name") > 0) {
+      $items_query = "SELECT items.id, items.name, items.email, items.password, items.url, organizations.organization_name, folders.folder_name, items.folder_id, items.organization_id 
+  FROM $items_table_name AS items 
+  LEFT JOIN $organizations_table_name AS organizations ON items.organization_id = organizations.id 
+  LEFT JOIN $folders_table_name AS folders ON items.folder_id = folders.id";
+    }
 
     $total_items = $wpdb->get_var("SELECT COUNT(*) FROM ($items_query) AS total_items");
 
@@ -40,23 +45,28 @@
     $current_page = min($current_page, $total_pages);
 
     $offset = ($current_page - 1) * $items_per_page;
+    $offset = max(0, $offset);
 
     $items = $wpdb->get_results($items_query . " LIMIT $offset, $items_per_page");
 
-    foreach ($items as $item) {
-      echo '<tr>';
-      echo '<th scope="row" class="item-id">' . $item->id . '</th>';
-      echo '<td class="item-name">' . $item->name . '</td>';
-      echo '<td class="item-email">' . $item->email . '</td>';
-      echo '<td class="item-password">' . $item->password . '</td>';
-      echo '<td class="item-url"><a href="' . $item->url . '">' . $item->url . '</a></td>';
-      echo '<td class="item-organization" data-organization-id=" ' . $item->organization_id . ' ">' . $item->organization_name . '</td>';
-      echo '<td class="item-folder" data-folder-id="' . $item->folder_id . '">' . $item->folder_name . '</td>';
-      echo '<td>
+    if (empty($items)) {
+      echo '<tr><td colspan="8">No data available</td></tr>';
+    } else {
+      foreach ($items as $item) {
+        echo '<tr>';
+        echo '<th scope="row" class="item-id">' . $item->id . '</th>';
+        echo '<td class="item-name">' . $item->name . '</td>';
+        echo '<td class="item-email">' . $item->email . '</td>';
+        echo '<td class="item-password">' . $item->password . '</td>';
+        echo '<td class="item-url"><a href="' . $item->url . '">' . $item->url . '</a></td>';
+        echo '<td class="item-organization" data-organization-id=" ' . $item->organization_id . ' ">' . $item->organization_name . '</td>';
+        echo '<td class="item-folder" data-folder-id="' . $item->folder_id . '">' . $item->folder_name . '</td>';
+        echo '<td>
                 <a class="edit-item" data-toggle="modal" data-target="#editItemModal" href="edit_item.php?id=' . $item->id . '"><i class="fas fa-edit"></i></a>
                 <a href="" class="delete-item" data-item-id="' . $item->id . '"><i class="fas fa-trash"></i></a>
               </td>';
-      echo '</tr>';
+        echo '</tr>';
+      }
     }
     ?>
   </tbody>
@@ -82,5 +92,3 @@
   echo '</div>';
   ?>
 </div>
-
-

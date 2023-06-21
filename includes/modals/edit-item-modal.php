@@ -14,7 +14,7 @@
                     <input type="hidden" id="editFolderId" name="editFolderId" value="">
                     <div class="form-group">
                         <label for="editFolder">Folder</label>
-                        <select class="form-control" id="editFolder">
+                        <select class="form-control" id="editFolder" required>
                             <option id="default-folder" value=""></option>
                             <?php
                             global $wpdb;
@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <label for="editOrganization">Organization</label>
-                        <select class="form-control" id="editOrganization">
+                        <select class="form-control" id="editOrganization" required>
                             <option id="default-organization" value=""></option>
                             <?php
                             global $wpdb;
