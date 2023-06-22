@@ -2,9 +2,8 @@ jQuery(document).ready(function ($) {
   //Add Organization
   $("#addOrganizationForm").on("submit", function (e) {
     var organizationName = $("#organizationName").val();
-
     $.ajax({
-      url: ajaxurl,
+      url: myplugin_ajax_object.ajaxurl,
       type: "POST",
       data: {
         action: "add_organization",
@@ -35,7 +34,7 @@ jQuery(document).ready(function ($) {
     $("#saveEditOrganizationBtn").on("click", function () {
       organizationName = $("#editOrganizationName").val();
       $.ajax({
-        url: ajaxurl,
+        url: myplugin_ajax_object.ajaxurl,
         type: "POST",
         data: {
           action: "update_organization",
@@ -62,7 +61,7 @@ jQuery(document).ready(function ($) {
 
     if (confirm("Are you sure you want to delete this organization?")) {
       $.ajax({
-        url: ajaxurl,
+        url: myplugin_ajax_object.ajaxurl,
         type: "POST",
         data: {
           action: "delete_organization",

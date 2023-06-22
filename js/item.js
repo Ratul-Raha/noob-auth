@@ -1,6 +1,7 @@
 $(document).ready(function () {
   //Generate Password
   function generatePassword(length) {
+    
     var chars =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+=";
     var password = "";
@@ -29,7 +30,7 @@ $(document).ready(function () {
       console.log("Form is valid");
       $.ajax({
         type: "POST",
-        url: ajaxurl,
+        url: myplugin_ajax_object.ajaxurl,
         data: {
           action: "add_item",
           folder: $("#folder").val(),
@@ -188,8 +189,6 @@ $(document).ready(function () {
         if (response.success) {
           alert("Item updated successfully");
           $("#editItemModal").hide();
-          location.reload();
-          
         } else {
           alert("Failed to update item. Please try again.");
         }
@@ -208,7 +207,7 @@ $(document).ready(function () {
     if (confirm("Are you sure you want to delete this item?")) {
       $.ajax({
         type: "POST",
-        url: ajaxurl,
+        url: myplugin_ajax_object.ajaxurl,
         data: {
           action: "delete_item",
           itemId: itemId,
@@ -237,7 +236,7 @@ $(document).ready(function () {
   
     function exportItemsCSV() {
       $.post(
-        ajaxurl,
+        myplugin_ajax_object.ajaxurl,
         {
           action: 'export_items_csv',
         },

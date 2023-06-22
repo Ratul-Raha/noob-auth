@@ -1,17 +1,16 @@
-
 <?php
 class ItemManager
 {
-    //Add Item
+    // Add Item
     function add_item()
     {
         global $wpdb;
-        $folder = $_POST['folder'];
-        $organization = $_POST['organization'];
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $url = $_POST['url'];
+        $folder = isset($_POST['folder']) ? sanitize_text_field($_POST['folder']) : '';
+        $organization = isset($_POST['organization']) ? sanitize_text_field($_POST['organization']) : '';
+        $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+        $email = isset($_POST['email']) ? sanitize_text_field($_POST['email']) : '';
+        $password = isset($_POST['password']) ? sanitize_text_field($_POST['password']) : '';
+        $url = isset($_POST['url']) ? sanitize_text_field($_POST['url']) : '';
 
         $table_name = $wpdb->prefix . 'items';
         $data = array(
@@ -38,21 +37,19 @@ class ItemManager
         exit;
     }
 
-    //update item
-
+    // Update Item
     function update_item()
     {
-
         global $wpdb;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $folder = $_POST['folder'];
-            $organization = $_POST['organization'];
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $url = $_POST['url'];
-            $itemID = $_POST['itemID'];
+            $folder = isset($_POST['folder']) ? sanitize_text_field($_POST['folder']) : '';
+            $organization = isset($_POST['organization']) ? sanitize_text_field($_POST['organization']) : '';
+            $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+            $email = isset($_POST['email']) ? sanitize_text_field($_POST['email']) : '';
+            $password = isset($_POST['password']) ? sanitize_text_field($_POST['password']) : '';
+            $url = isset($_POST['url']) ? sanitize_text_field($_POST['url']) : '';
+            $itemID = isset($_POST['itemID']) ? sanitize_text_field($_POST['itemID']) : '';
 
             $item_table_name = $wpdb->prefix . 'items';
 
@@ -80,15 +77,14 @@ class ItemManager
         }
     }
 
-    //delete Items
-
+    // Delete Item
     function delete_item()
     {
         global $wpdb;
         $items_table_name = $wpdb->prefix . 'items';
 
         if (isset($_POST['itemId'])) {
-            $itemId = $_POST['itemId'];
+            $itemId = sanitize_text_field($_POST['itemId']);
 
             $deleted = $wpdb->delete($items_table_name, array('id' => $itemId));
 
@@ -106,11 +102,9 @@ class ItemManager
         }
     }
 
-    //Export as Csv
-
+    // Export as CSV
     function export_items_csv()
     {
-      
         if (!current_user_can('manage_options')) {
             wp_send_json_error('Access Denied');
         }

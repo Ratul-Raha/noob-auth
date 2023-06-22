@@ -1,11 +1,9 @@
 jQuery(document).ready(function ($) {
-
   //Add Folder
   $("#saveFolderBtn").on("click", function () {
     var folderName = $("#folderName").val();
-    console.log(ajaxurl);
     $.ajax({
-      url: ajaxurl,
+      url: myplugin_ajax_object.ajaxurl,
       type: "POST",
       data: {
         action: "add_folder",
@@ -13,7 +11,7 @@ jQuery(document).ready(function ($) {
       },
       success: function (response) {
         if (response.success) {
-          alert('Success: ' + 'Added successfully!');
+          alert("Success: " + "Added successfully!");
           location.reload();
         } else {
           alert("Error: " + response.data.message);
@@ -28,61 +26,59 @@ jQuery(document).ready(function ($) {
   //Edit Folder
   $(document).on("click", ".edit-folder", function (e) {
     e.preventDefault();
-    $('#listFolderModal').modal("hide");
+    $("#listFolderModal").modal("hide");
     var folderId = $(this).data("id");
     var folderName = $(this).data("folder-name");
-    $('#editFolderName').val(folderName);
+    $("#editFolderName").val(folderName);
 
-    $('#saveEditFolderBtn').on('click', function() {
-      var folderName = $('#editFolderName').val();
+    $("#saveEditFolderBtn").on("click", function () {
+      var folderName = $("#editFolderName").val();
       $.ajax({
-        url: ajaxurl,
-        type: 'POST',
+        url: myplugin_ajax_object.ajaxurl,
+        type: "POST",
         data: {
-          action: 'update_folder',
+          action: "update_folder",
           folderId: folderId,
-          folderName: folderName
+          folderName: folderName,
         },
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
-            alert('Success: ' + 'Updated successfully!');
-            location.reload();
+            alert("Success: " + "Updated successfully!");
           } else {
-            alert('Error: ' + response.data.message);
+            alert("Error: " + response.data.message);
           }
         },
-        error: function(xhr, status, error) {
-          alert('AJAX Error: ' + error);
-        }
+        error: function (xhr, status, error) {
+          alert("AJAX Error: " + error);
+        },
       });
     });
   });
 
   //Delete Folder
 
-  $('.delete-folder').on('click', function (e) {
+  $(".delete-folder").on("click", function (e) {
     e.preventDefault();
-    var folderId = $(this).data('id');
-    if (confirm('Are you sure you want to delete this folder?')) {
+    var folderId = $(this).data("id");
+    if (confirm("Are you sure you want to delete this folder?")) {
       $.ajax({
         url: ajaxurl,
-        type: 'POST',
+        type: "POST",
         data: {
-          action: 'delete_folder',
+          action: "delete_folder",
           folderId: folderId,
         },
         success: function (response) {
           if (response.success) {
             location.reload();
           } else {
-            alert('Error: ' + response.data.message);
+            alert("Error: " + response.data.message);
           }
         },
         error: function (xhr, status, error) {
-          alert('AJAX Error: ' + error);
-        }
+          alert("AJAX Error: " + error);
+        },
       });
     }
   });
-
 });
