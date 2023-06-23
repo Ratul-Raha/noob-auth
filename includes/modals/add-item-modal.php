@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label for="password">Password</label>
                             <div class="password-input">
-                                <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                                <input type="password" class="form-control password-input" id="password" placeholder="Enter password" required>
                                 <span class="password-toggle-icon">
                                     <i class="fas fa-eye"></i>
                                 </span>

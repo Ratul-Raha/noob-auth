@@ -61,49 +61,27 @@ $(document).ready(function () {
 
   // Password visibility toggle
   $(document).on("click", ".password-toggle-icon", function () {
-    var passwordInput = $("#password");
     var passwordField = $(this).find("i");
-    
-    if (passwordField.hasClass("fa-eye")) {
-      var currentPassword = passwordInput.val();
-      var newPassword = $('<input>', {
-        type: "text",
-        value: currentPassword,
-        id: "password",
-        class: passwordInput.attr("class"),
-        style: passwordInput.attr("style")
-      });
-      
-      passwordInput.replaceWith(newPassword);
-      passwordInput = newPassword;
-      
-      passwordField.removeClass("fa-eye");
-      passwordField.addClass("fa-eye-slash");
-      alert("Password visible");
-    } else if (passwordField.hasClass("fa-eye-slash")) {
-      var currentPassword = passwordInput.val();
-      var newPassword = $('<input>', {
-        type: "password",
-        value: currentPassword,
-        id: "password",
-        class: passwordInput.attr("class"),
-        style: passwordInput.attr("style")
-      });
-      
-      passwordInput.replaceWith(newPassword);
-      passwordInput = newPassword;
-      
-      passwordField.removeClass("fa-eye-slash");
-      passwordField.addClass("fa-eye");
-      alert("Password hidden");
-    }
+    var passwordInputs = $(".password-input");
+  
+    passwordInputs.each(function () {
+      var passwordInput = $(this);
+      var inputType = passwordInput.attr("type");
+  
+      if (inputType === "password") {
+        passwordInput.attr("type", "text");
+        passwordField.removeClass("fa-eye");
+        passwordField.addClass("fa-eye-slash");
+      } else if (inputType === "text") {
+        passwordInput.attr("type", "password");
+        passwordField.removeClass("fa-eye-slash");
+        passwordField.addClass("fa-eye");
+      }
+    });
   });
   
   
-  
-  
-
-  // Form validation
+    // Form validation
   function validateForm() {
     var valid = true;
     var nameInput = $("#name");
