@@ -71,3 +71,5 @@ function create_custom_table()
     dbDelta($sql_items);
     dbDelta($sql_organizations);
 }
+
+

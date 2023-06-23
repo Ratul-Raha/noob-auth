@@ -60,20 +60,48 @@ $(document).ready(function () {
   });
 
   // Password visibility toggle
-  $(".password-toggle-icon").click(function () {
-    var passwordInput = $(this).siblings('input[type="password"]');
+  $(document).on("click", ".password-toggle-icon", function () {
+    var passwordInput = $("#password");
     var passwordField = $(this).find("i");
-
-    if (passwordInput.attr("type") === "password") {
-      passwordInput.attr("type", "text");
+    
+    if (passwordField.hasClass("fa-eye")) {
+      var currentPassword = passwordInput.val();
+      var newPassword = $('<input>', {
+        type: "text",
+        value: currentPassword,
+        id: "password",
+        class: passwordInput.attr("class"),
+        style: passwordInput.attr("style")
+      });
+      
+      passwordInput.replaceWith(newPassword);
+      passwordInput = newPassword;
+      
       passwordField.removeClass("fa-eye");
       passwordField.addClass("fa-eye-slash");
-    } else {
-      passwordInput.attr("type", "password");
+      alert("Password visible");
+    } else if (passwordField.hasClass("fa-eye-slash")) {
+      var currentPassword = passwordInput.val();
+      var newPassword = $('<input>', {
+        type: "password",
+        value: currentPassword,
+        id: "password",
+        class: passwordInput.attr("class"),
+        style: passwordInput.attr("style")
+      });
+      
+      passwordInput.replaceWith(newPassword);
+      passwordInput = newPassword;
+      
       passwordField.removeClass("fa-eye-slash");
       passwordField.addClass("fa-eye");
+      alert("Password hidden");
     }
   });
+  
+  
+  
+  
 
   // Form validation
   function validateForm() {
